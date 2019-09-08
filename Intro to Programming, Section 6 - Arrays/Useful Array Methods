@@ -1,0 +1,12 @@
+array.pop
+array.unshift
+array.push
+array.first
+array.last
+array.map
+array.delete
+array.delete_at(index)
+array.uniq
+array.uniq!
+array.select{block evaluation}
+array.include?
