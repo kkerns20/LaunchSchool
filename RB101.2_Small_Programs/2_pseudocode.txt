@@ -1,0 +1,66 @@
+For example, write out pseudo-code (both casual and formal) that does the following:
+
+a method that returns the sum of two integers
+
+    casual
+
+    ask user for integer
+    validate response (numerical? non-float?)
+    ask user for integer
+    validate response (numerical? non-float?)
+    perform operation
+    print value
+
+    formal
+
+    START
+    GET input1
+    IF isfloat or isstring
+        error prompt, ask again
+    GET input2
+    IF isfloat or isstring
+        error prompt, ask again
+    response = input1 + input2
+    PRINT response
+
+a method that takes an array of strings, and returns a string that is all those strings concatenated together
+
+    casual
+
+    create a blank string to hold final answer named response
+    starting with the first, for each value in array, string-concatenate with response string
+    once array is exhausted, print response
+
+    formal
+
+    # Assumed that proper array of string-typed objects are passed through method call
+    SET empty response variable (string-typed)
+    SET counter to 0
+    WHILE counter < length of array
+        response += nth_value
+        counter += 1
+    PRINT response
+
+a method that takes an array of integers, and returns a new array with every other element
+
+    casual
+
+    # Assume output expects 0th, 2nd, 4th, etc elements of input array
+    create an empty array to hold final answer named response
+    create an incrementer
+    starting with the first, check modulus incrementer%2
+        if 0, append to response
+        if 1, continue
+    once array is exhausted, print response
+
+    formal
+
+    SET empty response variable (array-typed)
+    SET counter to 0
+    WHILE counter < length of array
+        IF even
+            append value to response
+        counter += 1
+    PRINT response
+
+No need to code here, just practice writing logic out in English.
