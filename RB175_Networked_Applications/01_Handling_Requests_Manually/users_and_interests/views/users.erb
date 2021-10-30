@@ -1,0 +1,11 @@
+<h2>Contact and Interests Information</h2>
+
+<ul>
+  <% @users.keys.each do |user_name| %>
+    <li>
+      <a href="/<%= user_name %>">
+        <%= user_name.capitalize %>
+      </a>
+    </li>
+  <% end %>
+</ul>

@@ -1,0 +1,13 @@
+<h2>User Information for <%= @user_name.capitalize %></h2>
+
+<p><%= @email %></p>
+
+<p><%= @user_name.capitalize %> enjoys <%= @interests.join(', ') %></p>
+
+<ul>
+  <% @users.each do |user_name, _| %>
+    <% unless user_name == @user %>
+      <li><a href="/<%= user_name %>"><%= user_name.capitalize %></a></li>
+    <% end %>
+  <% end %>
+</ul>
