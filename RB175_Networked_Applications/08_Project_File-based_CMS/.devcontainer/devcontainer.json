@@ -1,8 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
-// https://github.com/microsoft/vscode-dev-containers/tree/v0.202.5/containers/ruby
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.205.1/containers/ruby
 {
 	"name": "Ruby",
-	"runArgs": ["--init"],
 	"build": {
 		"dockerfile": "Dockerfile",
 		"args": { 
@@ -21,10 +20,7 @@
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
 		"rebornix.Ruby",
-		"formulahendry.code-runner",
-		"esbenp.prettier-vscode",
-		"walkme.ruby-extension-pack",
-		"castwide.ruby-debug"
+		"vortizhe.simple-ruby-erb"
 	],
 	
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
