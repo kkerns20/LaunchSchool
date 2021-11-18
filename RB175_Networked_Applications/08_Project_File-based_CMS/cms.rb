@@ -37,7 +37,7 @@ get '/:file_name' do
   file_path = DATA_PATH + params[:file_name]
 
   if !File.file?(file_path)
-    session[:message] = "#{params[:file_name} does not exist."
+    session[:message] = "#{params[:file_name]} does not exist."
     redirect '/'
   end
 
@@ -58,6 +58,6 @@ post '/:file_name/edit' do
 
   File.write(file_path, params[:content])
 
-  session[:message] = "#{params[:file_name} has been updated."
+  session[:message] = "#{params[:file_name]} has been updated."
   redirect '/'
 end
