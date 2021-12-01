@@ -1,14 +1,10 @@
-<% if session[:message] %>
-  <p><%= session.delete(:message) %></p>
-<% end %>
-
-<ul>
-  <% @dir.each do |file| %>
-    <li>
-      <a href="/<%= file %>"><%= file %></a>
-      edit button here
-        <a href='/<%= file %>/edit'>Edit</a>
-      edit button here
-    </li>
-  <% end %>
-</ul>
+<html>
+  <title>CMS</title>
+  <link href='/stylesheets/cms.css' rel='stylesheet' type='text/css' />
+  <body>
+    <% if session[:message] %>
+      <p class='message'><%= session.delete(:message) %></p>
+    <% end %>
+    <%= yield %>
+  </body>
+</html>
