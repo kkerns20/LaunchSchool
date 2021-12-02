@@ -33,13 +33,47 @@ def data_path
   end
 end
 
+def enforce_sign_in
+  return if session[:user_name]
+
+  session[:message] = 'You must be signed in to do that.'
+  redirect '/'
+end
+
 get '/' do
   @dir = Dir.glob(File.join(data_path, '*'))
             .map { |file| File.basename(file) }
   erb :index
 end
 
+get '/users/sign_in' do
+  erb :sign_in
+end
+
+post '/users/sign_in' do
+  @user_name = params[:user_name]
+  @password = params[:password]
+
+  if @user_name == 'admin' && @password == 'secret'
+    session[:user_name] = @user_name
+    session[:message] = 'Welcome!'
+    redirect '/'
+  else
+    session[:message] = "Invalid credentials."
+    status 422
+    erb :sign_in
+  end
+end
+
+post '/users/sign_out' do
+  session.delete(:user_name)
+  session[:message] = 'You have been signed out.'
+  redirect '/'
+end
+
 get '/new' do
+  enforce_sign_in
+
   erb :new
 end
 
@@ -55,6 +89,8 @@ get '/:file_name' do
 end
 
 get '/:file_name/edit' do
+  enforce_sign_in
+
   file_path = File.join(data_path, params[:file_name])
 
   @file_name = params[:file_name]
@@ -64,6 +100,8 @@ get '/:file_name/edit' do
 end
 
 post '/create' do
+  enforce_sign_in
+
   @new_file_name = params[:new_file_name].to_s
 
   if @new_file_name.empty?
@@ -78,6 +116,8 @@ post '/create' do
 end
 
 post '/:file_name/delete' do
+  enforce_sign_in
+
   file_name = File.join(data_path, params[:file_name])
 
   File.delete(file_name)
@@ -86,6 +126,8 @@ post '/:file_name/delete' do
 end
 
 post '/:file_name' do
+  enforce_sign_in
+
   file_path = File.join(data_path, params[:file_name])
 
   File.write(file_path, params[:content])
