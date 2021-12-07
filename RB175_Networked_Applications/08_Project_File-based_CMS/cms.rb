@@ -1,8 +1,10 @@
+require 'bcrypt'
 require 'redcarpet'
 require 'sinatra'
 require 'sinatra/content_for'
 require 'sinatra/reloader'
 require 'tilt/erubis'
+require 'yaml'
 
 configure do
   enable :sessions
@@ -40,6 +42,26 @@ def enforce_sign_in
   redirect '/'
 end
 
+def load_user_credentials
+  credentials_path = if ENV['RACK_ENV'] == 'test'
+    File.expand_path('../tests/users.yml', __FILE__)
+  else
+    File.expand_path('../users.yml', __FILE__)
+  end
+  YAML.load_file(credentials_path)
+end
+
+def valid_credentials?(user_name, password)
+  credentials = load_user_credentials
+
+  if credentials.key?(user_name)
+    bcrypt_password = BCrypt::Password.new(credentials[user_name])
+    bcrypt_password == password
+  else
+    false
+  end
+end
+
 get '/' do
   @dir = Dir.glob(File.join(data_path, '*'))
             .map { |file| File.basename(file) }
@@ -51,11 +73,10 @@ get '/users/sign_in' do
 end
 
 post '/users/sign_in' do
-  @user_name = params[:user_name]
-  @password = params[:password]
+  user_name = params[:user_name]
 
-  if @user_name == 'admin' && @password == 'secret'
-    session[:user_name] = @user_name
+  if valid_credentials?(user_name, params[:password])
+    session[:user_name] = user_name
     session[:message] = 'Welcome!'
     redirect '/'
   else
